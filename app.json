@@ -18,7 +18,18 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#6231E7",
+          "image": "./assets/icon.png",
+          "imageWidth": 200
+        }
+      ]
+    ]
   }
 }
