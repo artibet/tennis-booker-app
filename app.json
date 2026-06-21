@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "tennis-booking-app",
-    "slug": "tennis-booking-app",
+    "name": "TennisBooker",
+    "slug": "tennis-booker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#133B24",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
@@ -25,9 +24,10 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#6231E7",
-          "image": "./assets/icon.png",
-          "imageWidth": 200
+          "backgroundColor": "#133B24",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
         }
       ]
     ]
