@@ -14,7 +14,8 @@
         "backgroundColor": "#133B24",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "package": "com.artibet.tennisbooker"
     },
     "web": {
       "favicon": "./assets/favicon.png",
