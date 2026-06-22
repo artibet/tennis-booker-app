@@ -1,0 +1,101 @@
+----------------------------------------------------------------------
+With Expo
+----------------------------------------------------------------------
+
+1. Uncomment into App.jsx:
+  import * as ExpoInAppUpdates from "expo-in-app-updates";
+  enforceRequiredUpdate(); (into useEffect)
+
+2. Execute 
+  npx expo start -c   
+  npx eas-cli build --platform android --profile production
+  
+----------------------------------------------------------------------
+Without Expo
+----------------------------------------------------------------------
+
+1. Generate keystore
+From inside c:\Program Files\Java\Jdkx.x.x\bin run
+
+keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+2. Place the generated keystore file inside anddroid/app folder. If this folder doesn't exist in an expo project run:
+
+rm -rf ./android
+rm -rf .expo
+npx expo prebuild --platform android --clean
+
+3. Edit android/gradle.properties and add the following:
+
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.jks (or .keystore)
+MYAPP_UPLOAD_STORE_PASSWORD=
+MYAPP_UPLOAD_KEY_ALIAS=
+MYAPP_UPLOAD_KEY_PASSWORD=
+
+4. Change into android/settigns.gradle:
+
+rootProject.name = 'aneser_mobile'
+
+
+5. Adding signing configuration into android/app/build.gradle:
+
+...
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+...
+
+6. Start the building process:
+
+cd android
+./gradlew --stop
+rm -rf .gradle
+./gradlew clean
+./gradlew bundleRelease
+
+6. To αρχείο .aab είναι στη διαδρομή:
+android/app/build/outputs/bundle/release/app-release.aab
+
+
+
+
+7. Για την δημιοιυργία ενός τοπικού .apk για δοκιμή πριν το ανέβασμα:
+
+cd android
+./gradlew assembleRelease
+
+Το αρχείοι .apk είναι στη διαδρομή:
+android/app/build/outputs/apk/release/app-release.apk
+
+
+8. Για την δημιουργία ενός development build (αντί για Expo-Go):
+
+npx expo run:android
+ή
+npx expo run:ios
+
+npx run:android do the following:
+
+- npx expo prebuild
+- cd android && ./gradlew clean && ./gradlew assembleDebug
+- adb install app/build/outputs/apk/debug/app-debug.apk
+- npx expo start
+
+
